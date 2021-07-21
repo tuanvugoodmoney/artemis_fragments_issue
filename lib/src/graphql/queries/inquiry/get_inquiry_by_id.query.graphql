@@ -1,0 +1,7 @@
+query getInquiryById($inquiryById: ID!) {
+  user {
+    inquiryBy(id: $inquiryById) {
+      ...inquiryResultFragment
+    }
+  }
+}

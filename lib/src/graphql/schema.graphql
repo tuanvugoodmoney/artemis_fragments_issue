@@ -1,0 +1,27 @@
+
+type User {
+  inquiryBy(id: ID!): InquiryResult!
+}
+
+type Inquiry {
+  id: String!
+}
+
+type InquiryNotFoundError implements Error {
+  message: String!
+}
+
+union InquiryResult = Inquiry | InquiryNotFoundError | InquiryResumeFailedError | ServiceUnavailableError
+
+type InquiryResumeFailedError implements Error {
+  message: String!
+}
+
+type ServiceUnavailableError implements Error {
+  message: String!
+}
+
+type Query {
+  """Returns the User object from the validated JSON Web Token."""
+  user: User!
+}

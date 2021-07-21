@@ -1,0 +1,15 @@
+fragment inquiryResultFragment on InquiryResult {
+  __typename
+  ... on Inquiry {
+    id
+  }
+  ... on InquiryNotFoundError {
+    message
+  }
+  ... on ServiceUnavailableError {
+    message
+  }
+  ... on InquiryResumeFailedError {
+    message
+  }
+}

@@ -1,0 +1,24 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - lib/src/graphql/**
+      - lib/src/graphql/schema.graphql
+  artemis_fragments_issue:
+    builders:
+      source_gen|combining_builder:
+        options:
+          ignore_for_file:
+            - public_member_api_docs
+            - lines_longer_than_80_chars
+            - constant_identifier_names
+      artemis:
+        options:
+          fragments_glob: lib/src/graphql/fragments/*.fragment.graphql
+          schema_mapping:
+            - schema: lib/src/graphql/schema.graphql
+              queries_glob: lib/src/graphql/queries/**.graphql
+              output: lib/src/graphql/graphql.dart
+      json_serializable:
+        options:
+          include_if_null: false
