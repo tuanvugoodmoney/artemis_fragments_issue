@@ -11,6 +11,9 @@ mixin InquiryResultFragmentMixin {
   @JsonKey(name: '__typename')
   String? $$typename;
 }
+mixin UserFragmentMixin {
+  late String id;
+}
 
 @JsonSerializable(explicitToJson: true)
 class GetInquiryById$Query$User$InquiryResult extends JsonSerializable
@@ -128,6 +131,35 @@ class InquiryResultFragmentMixin$InquiryResumeFailedError
   @override
   Map<String, dynamic> toJson() =>
       _$InquiryResultFragmentMixin$InquiryResumeFailedErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GetUser$Query$User extends JsonSerializable
+    with EquatableMixin, UserFragmentMixin {
+  GetUser$Query$User();
+
+  factory GetUser$Query$User.fromJson(Map<String, dynamic> json) =>
+      _$GetUser$Query$UserFromJson(json);
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$GetUser$Query$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GetUser$Query extends JsonSerializable with EquatableMixin {
+  GetUser$Query();
+
+  factory GetUser$Query.fromJson(Map<String, dynamic> json) =>
+      _$GetUser$QueryFromJson(json);
+
+  late GetUser$Query$User user;
+
+  @override
+  List<Object?> get props => [user];
+  @override
+  Map<String, dynamic> toJson() => _$GetUser$QueryToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -271,4 +303,52 @@ class GetInquiryByIdQuery
   @override
   GetInquiryById$Query parse(Map<String, dynamic> json) =>
       GetInquiryById$Query.fromJson(json);
+}
+
+final GET_USER_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'getUser'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'user'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'userFragment'), directives: [])
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'userFragment'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class GetUserQuery extends GraphQLQuery<GetUser$Query, JsonSerializable> {
+  GetUserQuery();
+
+  @override
+  final DocumentNode document = GET_USER_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'getUser';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  GetUser$Query parse(Map<String, dynamic> json) =>
+      GetUser$Query.fromJson(json);
 }

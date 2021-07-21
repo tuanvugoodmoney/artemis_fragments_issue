@@ -106,6 +106,25 @@ Map<String, dynamic>
           'message': instance.message,
         };
 
+GetUser$Query$User _$GetUser$Query$UserFromJson(Map<String, dynamic> json) {
+  return GetUser$Query$User()..id = json['id'] as String;
+}
+
+Map<String, dynamic> _$GetUser$Query$UserToJson(GetUser$Query$User instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+GetUser$Query _$GetUser$QueryFromJson(Map<String, dynamic> json) {
+  return GetUser$Query()
+    ..user = GetUser$Query$User.fromJson(json['user'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$GetUser$QueryToJson(GetUser$Query instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
+
 GetInquiryByIdArguments _$GetInquiryByIdArgumentsFromJson(
     Map<String, dynamic> json) {
   return GetInquiryByIdArguments(
